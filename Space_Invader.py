@@ -1,9 +1,6 @@
 import pygame
 from pygame import mixer
-import os
 
-#Change directory
-os.chdir(os.path.dirname(__file__))
 
 #Highscore
 with open('highscore.txt','r') as f:
@@ -19,9 +16,10 @@ screen = pygame.display.set_mode((WIDTH,HEIGHT))
 pygame.display.set_caption("Space Invader")
 icon = pygame.image.load('ship.png')
 pygame.display.set_icon(icon)
+background=pygame.transform.scale(pygame.image.load('mars.jpg'),(WIDTH,HEIGHT))
 #Icons made by <a href="https://www.flaticon.com/authors/photo3idea-studio" title="photo3idea_studio">photo3idea_studio</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 #Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
-
+#<a href="https://flyclipart.com/space-invaders-alien-png-image-with-transparent-background-png-arts-space-invader-png-340336">Space Invaders Alien Png Image With Transparent Background Png Arts - Space Invader PNG</a>
 
 #Music and Sounds
 game_over_sound=mixer.Sound('explosion.wav')
@@ -68,6 +66,7 @@ class Enemy(Object):
     max_y=0
     x_move=0
     img=pygame.image.load('alien1.png')
+    img2=pygame.image.load('alien2.png')    
     def __init__(self,x,y):
         super().__init__(x,y)
         self.enemies.append(self)
@@ -75,6 +74,16 @@ class Enemy(Object):
     def __del__(self):
         if self in Enemy.enemies:
             Enemy.enemies.remove(self)
+
+    def change_img(f):
+        def wrapped(*args, **kwargs):
+            wrapped.calls += 1
+            if wrapped.calls>60:
+                Enemy.img,Enemy.img2=Enemy.img2,Enemy.img
+                wrapped.calls=0 
+            return f(*args, **kwargs)
+        wrapped.calls = 0
+        return wrapped
 
     @classmethod
     def get_max_y(cls):
@@ -85,6 +94,7 @@ class Enemy(Object):
         return max_y
 
     @classmethod
+    @change_img
     def move(cls):
         y_change=cls.img.get_height()*1.2
         for enemy in cls.enemies:
@@ -123,7 +133,9 @@ class Enemy(Object):
                 cls.x_move+=1
             cls.spawn(20)
             cls.max_y=cls.get_max_y()
-            
+
+
+
 class Laser(Object):
     ammo=3
     active=[]
@@ -178,7 +190,7 @@ def play_space_invader():
             y=0
             while y<=250:
                 y+=1
-                screen.fill((255,255,255))
+                screen.blit(background,(0,0))
                 screen.blit(game_over_label,(x,y))
                 pygame.time.wait(4)
                 pygame.display.update()
@@ -233,7 +245,7 @@ def play_space_invader():
                 screen.blit(Laser.img,(x+120,y))
         
         #RGB
-        screen.fill((255,255,255))
+        screen.blit(background,(0,0))
         score=mainfont.render("Score: "+str(Player.score),True,(0,0,0))
         screen.blit(score,(10,10))
         show_ammo()
@@ -277,7 +289,7 @@ def main_menu():
     menu_label=menu_font.render("Press Enter to play",True,(0,0,0))
     running=True
     while running:
-        screen.fill((255,255,255))
+        screen.blit(background,(0,0))
         screen.blit(title_label,((WIDTH-title_label.get_width())/2,(HEIGHT-menu_label.get_height()-100)/2))
         screen.blit(menu_label,((WIDTH-menu_label.get_width())/2,(HEIGHT-menu_label.get_height())/2))
         pygame.display.update()
@@ -291,3 +303,4 @@ def main_menu():
 
 if __name__ == "__main__":
     main_menu()
+    
