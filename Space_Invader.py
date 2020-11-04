@@ -1,8 +1,6 @@
 import pygame
 from pygame import mixer
 import os
-from math import sqrt
-from PIL import Image
 
 #Change directory
 os.chdir(os.path.dirname(__file__))
