@@ -32,6 +32,7 @@ mixer.music.load('background.wav')
 pygame.mixer.music.set_volume(0.3)
 mixer.music.play(-1,fade_ms=5000)
 
+#Baseclass
 class Object():
     image='laser.png'
     img=pygame.image.load(image)
@@ -44,6 +45,7 @@ class Object():
     def show(self):
         screen.blit(self.img,(self.x,self.y))
 
+#Playerclass
 class Player(Object):
     image='ship.png'
     img=pygame.image.load(image)
@@ -62,6 +64,7 @@ class Player(Object):
             self.x = 800-self.img_size-5
         self.show()
 
+#Enemyclass
 class Enemy(Object):
     image='alien1.png'
     img=pygame.image.load(image)
