@@ -197,7 +197,7 @@ class Font():
             y+=1
             screen.fill((255,255,255))
             screen.blit(game_over_font,(x,y))
-            pygame.time.wait(5)
+            pygame.time.wait(4)
             pygame.display.update()
         screen.blit(score_font,(x,y+80))
         screen.blit(highscore_font,(x,y+120))
