@@ -33,6 +33,7 @@ mixer.music.load('background.wav')
 pygame.mixer.music.set_volume(0.3)
 mixer.music.play(-1,fade_ms=5000)
 
+#Baseclass
 class Object():
     img=None
     def __init__(self,x,y):
@@ -54,6 +55,7 @@ class Object():
         delta_y = int(self.y-other.y)
         return self.mask.overlap(other.mask,(delta_x,delta_y)) != None
 
+#Playerclass
 
 class Player(Object):
     score=0
