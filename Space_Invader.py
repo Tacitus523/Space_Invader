@@ -191,12 +191,12 @@ def play_space_invader():
             while y<=250:
                 y+=1
                 screen.blit(background,(0,0))
-                screen.blit(game_over_label,(x,y))
+                screen.blit(game_over_label,(x-game_over_label.get_width()/2,y))
                 pygame.time.wait(4)
                 pygame.display.update()
 
-            screen.blit(score_label,(x,y+80))
-            screen.blit(highscore_label,(x,y+120))
+            screen.blit(score_label,(x-score_label.get_width()/2,y+80))
+            screen.blit(highscore_label,(x-highscore_label.get_width()/2,y+120))
             pygame.display.update()
             pygame.time.wait(3000)
    
